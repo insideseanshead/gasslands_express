@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path")
 //Express Setup
 const app = express();
-const port = 3000;
+const PORT = 3000;
 //Express data parsing
 app.use(express.urlencoded({entended:true}));
 app.use(express.json())
@@ -216,3 +216,6 @@ app.get("/api/vehicles/:vehicle", function(req,res){
 //create new car 
 
 //start server 
+app.listen(PORT, function() {
+    console.log("App listening on PORT" + PORT)
+})
