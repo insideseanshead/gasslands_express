@@ -189,10 +189,29 @@ const vehicles = [
 //routes
 
 //first ajax page "/"
+app.get("/", function(req,res) {
+    res.sendFile(path.join(__dirname, "view.html"))
+})
 
 //display all cars
+app.get("/api/vehicles", function(req,res){
+    return res.json(vehicles)
+})
 
 //display single car or return false
+app.get("/api/vehicles/:vehicle", function(req,res){
+    const chosen = req.params.vehicle
+
+    console.log(chosen)
+
+    for(i = 0; i < vehicles.length; i++){
+        if(chosen === vehicles[i].routeName){
+            return res.json(vehicles[i])
+        }
+    }
+
+    return rex.json(false)
+})
 
 //create new car 
 
