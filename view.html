@@ -1,41 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
     <title>GasLands</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="hero">
-            <div class="container">
-              <h1>GasLands-express</h1>
-            </div>
+      <div class="hero">
+        <div class="container">
+          <h1>GasLands-express</h1>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <h2>Search Vehicles</h2>
-            <input type="text" id="vehicleSearch" class="formControl">
-            <button type="submit" class="btn btn-primary btn-sm" id="searchBtn">Search</button>
-          </div>
-          
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h2>Search Vehicles</h2>
+          <input type="text" id="vehicleSearch" class="formControl" />
+          <button type="submit" class="btn btn-primary btn-sm" id="search-btn">
+            Search
+          </button>
         </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="name">Car</h5>
-              <h6 class="card-subtitle mb-2 text-muted weight">Middleweight</h6>
-              <ul class="stats">
-                <li class="hull"><span class="statNames">Hull:</span> 5</li>
-                <li class="maxGear"><span class="statNames">Max Gear:</span> 5</li>
-                <li class="special"><span class="statNames">Special:</span></li>
-                <li class="handling"><span class="statNames">Handling:</span>3</li>
-                <li class="crew"><span class="statNames">Crew:</span> 2</li>
-                <li class="cans"><span class="statNames">Cans:</span> 0</li>
-              </ul>
-            </div>
-          </div>
+      </div>
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 id="name">Car</h5>
+          <h6 class="card-subtitle mb-2 text-muted" id="weight">
+            Middleweight
+          </h6>
+          <ul id="stats">
+            <li><strong>Hull: </strong><span id="hull">5</span></li>
+            <li><strong>Max Gear: </strong><span id="maxGear">5</span></li>
+            <li><strong>Special: </strong><span id="special"></span></li>
+            <li><strong>Handling: </strong><span id="handling">3</span></li>
+            <li><strong>Crew: </strong><span id="crew">2</span></li>
+            <li><strong>Cans: </strong><span id="cans">0</span></li>
+          </ul>
+        </div>
+      </div>
     </div>
-</body>
+    <script type="text/javascript">
+      //Search Car Field
+      $("#search-btn").on("click", function () {
+        var searchedVehicle = $("#vehicleSearch").val().trim();
+        // removes spaces and turns input field to lower case.
+        searchedVehicle = searchedVehicle.replace(/\s+/g, "").toLowerCase();
+        //get request for vehicle api which will update card on index.
+        $.get("/api/vehicles/" + searchedVehicle, function(data) {
+          console.log(data);
+          if (data) {
+            $("#name").text(data.name);
+            $("#weight").text(data.weight);
+            $("hull").text(data.hull)
+            $("#maxGear").text(data.maxGear);
+            $("#special").text(data.special);
+            $("#handling").text(data.handling);
+            $("#crew").text(data.crew);
+            $("#cans").text(data.crew)
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
